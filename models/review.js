@@ -6,7 +6,7 @@ const reviewSchema = mongoose.Schema({
     rating : Number,
     comment : String,
     reviewDate :Number,
-    //reviwer picture uploard
+    //reviwer wanna picture uploard
 })
 
 const review =mongoose.model("reviews",reviewSchema)
