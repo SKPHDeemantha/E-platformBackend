@@ -49,10 +49,6 @@ export function loginUser(req,res){
                         message : "User logged in",
                         token:  token
                     })
-
-                    res.json({
-                        message : "User logged in"
-                    })
                 }else{
                     res.json({
                         message : "User not logged in(Wrong password)"

@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
 import studentRouter from './routes/StudentRouters.js';
 import productRouter from './routes/ProductRouters.js';
 import userRouter from './routes/UserRouter.js';
-//import jwt from 'jsonwebtoken'; 
+import jwt, { decode } from 'jsonwebtoken'; 
 
 const app = express();
 
@@ -22,28 +22,29 @@ connection.once("open",
 
 app.use(bodyparser.json())
 
-// app.use(
+app.use(
 
-//     (req,res,next)=>{
+    (req,res,next)=>{
   
-//       const token = req.header("Authorization")?.replace("Bearer ","")
-//       console.log(token)
+      const token = req.header("Authorization")?.replace("Bearer ","")
+      console.log(token)
   
-//       if(token != null){
-//         jwt.verify(token,"cbc-Secret-key-12024" , (error,decoded)=>{
+       if(token != null){
+       jwt.verify(token,"cbc-Secret-key-12024" , (error,decoded)=>{
   
-//           if(!error){
-//             req.user = decoded        
-//           }
+        if(!error){
+              console.log(decode)
+            req.user = decoded        
+           }
   
-//         })
-//       }
+         })
+       }
   
-//       next()
+      next()
   
-//     }
+     }
   
-//   )
+  )
 
 app.use("/api/students",studentRouter)
 app.use("/api/products",productRouter)
