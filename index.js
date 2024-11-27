@@ -32,10 +32,9 @@ app.use(
       console.log(token)
   
        if(token != null){
-       jwt.verify(token,"cbc-Secret-key-12024" , (error,decoded)=>{
+       jwt.verify(token,process.env.SECRET , (error,decoded)=>{
   
         if(!error){
-              console.log(decode)
             req.user = decoded        
            }
   
