@@ -16,10 +16,15 @@ const reviewSchema = mongoose.Schema({
         required :true,
         min :1,
         max :5
-    } 
-    comment : String,
-    reviewDate :Number,
-    reviewTime : Number,
+    }, 
+    comment :{ 
+       type : String,
+       required :true,
+    },
+    CreatedAt:{
+        type :Date,
+        default :Date.now,
+    }
     //reviwer wanna picture upload
 })
 
