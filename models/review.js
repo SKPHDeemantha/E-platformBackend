@@ -1,9 +1,22 @@
 import mongoose from "mongoose";
 
 const reviewSchema = mongoose.Schema({
-    reviwerName : String,
-    reviwerEmail :String,
-    rating : Number,
+    reviwerName :{
+      type : String,
+      ref : 'user',
+      required :true
+    }, 
+    reviwerEmail : {
+      type :  String,
+      ref :"user",
+      required :true
+    },
+    rating :{
+        type : Number,
+        required :true,
+        min :1,
+        max :5
+    } 
     comment : String,
     reviewDate :Number,
     reviewTime : Number,
