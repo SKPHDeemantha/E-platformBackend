@@ -1,5 +1,5 @@
-import order from "../models/order.js";
+import review from "../models/review.js";
 
-export function getOrder(req,res){
+export function InputReview(req,res){
     
 }
