@@ -7,7 +7,7 @@ dotenv.config();
 
 export function createUser(req,res){
      const newUserData = req.body
-    if(newUserData.type == "admin"){
+    if(newUserData.type == "Admin"){
         
         if(req.user==null){
             res.json({
@@ -15,7 +15,7 @@ export function createUser(req,res){
             })
             return
         }
-        if(req.user.type !="admin"){
+        if(req.user.type !="Admin"){
             res.json({
                 message :"Please login as administrtor to create admin accounts"
             })
@@ -81,7 +81,7 @@ export function isAdmin(req){
         if(req.user ==null){
             return false
         }
-        if(req.user.type !="admin"){
+        if(req.user.type !="Admin"){
             return false
 
         }
