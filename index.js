@@ -2,7 +2,6 @@ import express from 'express';
 import bodyparser from 'body-parser';
 import mongoose from 'mongoose';
 import studentRouter from './routes/StudentRouters.js';
-import productRouter from './routes/ProductRouters.js';
 import userRouter from './routes/UserRouter.js';
 import jwt from "jsonwebtoken"; 
 import dotenv from "dotenv";
@@ -48,7 +47,6 @@ app.use(
   )
 
 app.use("/api/students",studentRouter)
-app.use("/api/products",productRouter)
 app.use("/api/users",userRouter)  
 
 app.listen(
