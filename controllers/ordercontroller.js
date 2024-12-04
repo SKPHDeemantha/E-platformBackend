@@ -1,47 +1,64 @@
-
-import order from "../models/order.js";
+import Order from "../models/order.js";
 import { isCustomer } from "./userController.js";
 
 export async function createOrder(req,res){
-    // cbc0001
-    // take the latest product id
-    if(isCustomer){
-        res.json({
-            message :"Please login as customer to create orders"
-        })
+  
+  if(!isCustomer){
+    res.json({
+      message: "Please login as customer to create orders"
+    })
+  }
+
+  try{
+    const latestOrder = await Order.find().sort({date : -1}).limit(1)
+
+    let orderId
+
+    if(latestOrder.length == 0){
+      orderId = "CBC0001"
+    }else{
+      const currentOrderId = latestOrder[0].orderId
+
+      const numberString =  currentOrderId.replace("CBC","")
+
+      const number = parseInt(numberString)
+
+      const newNumber = (number + 1).toString().padStart(4, "0");
+
+      orderId = "CBC" + newNumber
     }
 
+    const newOrderData = req.body
+    newOrderData.orderId = orderId
+    newOrderData.email = req.user.email
 
-    try{
-        const latestOrder = await order.find().sort()
-        ({date : -1}).limit(1)
+    const order = new Order(newOrderData)
 
-     let orderId
+    await order.save()
 
-     if(latestOrder.length ==0){
-        orderId ="CBC0001"
-     }else{
-        const currentOderId = latestOrder[0].orderId
-        const numberString = currentOderId.
-        replace("CBC","")
+    res.json({
+      message: "Order created"
+    })
 
-        const number =parseInt(numberString)
 
-        const newNumber = (number + 1).toString().padStart(4, "0");
 
-        orderId ="CBC" + newNumber
-     }
+  }catch(error){
+    res.status(500).json({
+      message: error.message
+    })
+  }
 
-     const newOrderData =req.body
-     newOrderData.orderId =orderId
-     newOrderData.email =req.user.email
+}
 
-     const Order =new order(newOrderData)
-     await Order.save()
+export async function getOrders(req,res){
+  try{
+    const orders = await Order.find({email : req.user.email})
 
-    }catch(error){
-       res.status(500).json({
-        message:error.message
-       })
-    }
+    res.json(orders)
+
+  }catch(error){
+    res.status(500).json({
+      message: error.message
+    })
+  }
 }

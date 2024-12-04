@@ -60,6 +60,6 @@ const orderSchema =mongoose.Schema({
     
 
 
-const order =mongoose.model("Orders",orderSchema)
+const Order =mongoose.model("Orders",orderSchema)
 
-export default order;
+export default Order;
