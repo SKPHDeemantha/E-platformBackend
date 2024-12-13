@@ -20,5 +20,20 @@ export function createStudent(req,res){
         res.json({
             message :"student not created"
         })
-    })
+     })
 }
+
+// export async function createStudent(req, res) {
+//     try {
+//         const student = new Student(req.body);
+//         await student.save();
+//         res.json({
+//             message: "Student created"
+//         });
+//     } catch (error) {
+//         res.json({
+//             message: "Student not created",
+//             error: error.message // Optional: Include the error message for debugging
+//         });
+//     }
+// }

@@ -8,11 +8,10 @@ import dotenv from "dotenv";
 import productRouter from './routes/productRouter.js';
 import ordertRouter from './routes/oderRouter.js';
 dotenv.config();
-
+//env eke agata ; dapu eka thamai aula
 const app = express();
 
-const mongourl ="mongodb+srv://Admin:1234@cluster0.cx1ng.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
-
+const mongourl = process.env.MONGO_DB_URI
 mongoose.connect(mongourl,{})
 
 const connection = mongoose.connection;
