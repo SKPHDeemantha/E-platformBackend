@@ -7,12 +7,14 @@ import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 import productRouter from './routes/productRouter.js';
 import ordertRouter from './routes/oderRouter.js';
+import cors from 'cors';
 dotenv.config();
 //env eke agata ; dapu eka thamai aula
 const app = express();
 
 const mongourl = process.env.MONGO_DB_URI
 mongoose.connect(mongourl,{})
+app.use(cors())
 
 const connection = mongoose.connection;
 
