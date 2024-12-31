@@ -24,7 +24,7 @@ const productSchema =mongoose.Schema({
     stock : {
         type : String
     },
-    decription : {
+    description : {
         type :String
     }
 
