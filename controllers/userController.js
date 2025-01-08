@@ -11,7 +11,7 @@ export function createUser(req,res){
         
         if(req.user==null){
             res.json({
-            message :"Please login as administrator to create  hello admin accounts"
+            message :"Please login as administrator to create admin accounts"
             })
             return
         }
@@ -104,3 +104,10 @@ export function isCustomer(req){
     }
     return true 
 }    
+
+export function getUser(req,res){
+   user.find({}).then((users)=>{
+    res.json(users)
+   })
+}
+
