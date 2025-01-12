@@ -63,9 +63,11 @@ export  function updateProduct(req,res){
     return
   }
   const productId = req.params.ProductId
-
+  const data = req.body;
+// update request ekedi param(productId) eka witharak thibunta madi body ekath oni( const data = req.body;)eka nathi nisai oyage update eka fail une
   Product.updateOne(
-    { ProductId: productId }
+    { ProductId: productId },
+    { $set: data }
   ).then(() => {
     res.json({
       message: "Product updated"
