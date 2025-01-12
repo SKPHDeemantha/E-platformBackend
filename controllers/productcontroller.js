@@ -40,10 +40,10 @@ export function deleteProduct(req,res){
     return
   }
 
-  const productId = req.params.productId
+  const productId = req.params.ProductId
 
   Product.deleteOne(
-    { productId: productId }
+    { ProductId: productId }
   ).then(() => {
     res.json({
       message: "Product deleted"
@@ -62,10 +62,10 @@ export  function updateProduct(req,res){
     })
     return
   }
-  const productId = req.params.productId
+  const productId = req.params.ProductId
 
   Product.updateOne(
-    { productId: productId }
+    { ProductId: productId }
   ).then(() => {
     res.json({
       message: "Product updated"
@@ -79,9 +79,9 @@ export  function updateProduct(req,res){
 
 export async function getProductById(req,res) {
   try{
-    const productId = req.params.productId
+    const productId = req.params.ProductId
 
-    const product =await Product.findOne({productId : productId})
+    const product =await Product.findOne({ProductId : productId})
 
     res.json(product)
   }catch(e){
