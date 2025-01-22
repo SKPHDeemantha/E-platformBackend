@@ -1,9 +1,9 @@
 import Order from "../models/order.js";
-import Product from "../models/product.js"; // Added import for Product
+import Product from "../models/product.js";
 import { isCustomer } from "./userController.js";
 
 export async function createOrder(req, res) {
-  if (!isCustomer()) { // Corrected isCustomer check
+  if (!isCustomer()) { 
     return res.json({
       message: "Please login as customer to create orders"
     });
@@ -72,7 +72,7 @@ export async function getOrders(req, res) {
   }
 }
 
-export async function getquote(req, res) { // Added req, res parameters
+export async function getquote(req, res) { 
   try {
     const newOrderData = req.body;
     const newProductArray = [];
@@ -103,7 +103,7 @@ export async function getquote(req, res) { // Added req, res parameters
     newOrderData.orderedItems = newProductArray;
     newOrderData.orderedItems =newProductArray;
     newOrderData.total=total;
-    newOrderData.orderId = "QUOTE"; // Assuming a placeholder orderId for quotes
+    newOrderData.orderId = "QUOTE"; 
     newOrderData.email = req.user.email;
 
     const order = new Order(newOrderData);
