@@ -63,6 +63,11 @@ export async function createOrder(req, res) {
 
 export async function getOrders(req, res) {
   try {
+    if(isCustomer(req)){
+      const order =await Order.find({email:req.user.email});
+      res.json(orders);
+      return;
+    }
     const orders = await Order.find({ email: req.user.email });
     res.json(orders);
   } catch (error) {
@@ -107,10 +112,11 @@ export async function getquote(req, res) {
     newOrderData.email = req.user.email;
 
     const order = new Order(newOrderData);
-    await order.save();
+    const savedOrder= await order.save();
 
     res.json({
-      message: "Quote created"
+      message: "Quote created",
+      order : savedOrder
     });
 
   } catch (error) {

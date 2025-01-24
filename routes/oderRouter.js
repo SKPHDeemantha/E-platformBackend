@@ -6,7 +6,7 @@ const ordertRouter =express.Router();
 
 ordertRouter.post("/",createOrder)
 ordertRouter.get("/",getOrders)
-ordertRouter.get("/quote",getquote)
+ordertRouter.post("/quote",getquote)
 
 
 export default ordertRouter;
