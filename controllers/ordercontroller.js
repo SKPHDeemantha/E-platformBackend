@@ -3,16 +3,18 @@ import Product from "../models/product.js";
 import { isCustomer } from "./userController.js";
 
 export async function createOrder(req, res) {
-  if (!isCustomer()) { 
-    return res.json({
-      message: "Please login as customer to create orders"
-    });
-  }
+  //methanata oya req eka pass karala na ekai aula
+  // if (!isCustomer(req)) { 
+  //   return res.json({
+  //     message: "Please login as customer to create orders"
+  //   });
+  // }
 
   try {
-    const latestOrder = await Order.find().sort({ date: -1 }).limit(1);
+    const latestOrder = await Order.find().sort({ orderId: -1 }).limit(1);
     let orderId;
-
+    
+ 
     if (latestOrder.length === 0) {
       orderId = "CBC0001";
     } else {
