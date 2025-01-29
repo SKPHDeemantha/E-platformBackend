@@ -106,7 +106,7 @@ export function isCustomer(req){
     return true 
 }    
 
-export function getUser(req,res){
+export function getUser(_,res){
    user.find({}).then((users)=>{
     res.json(users)
    })
@@ -116,7 +116,7 @@ export async function googleLogin(req,res){
    const token=req.body.token; 
 
    try{
-    const response = await axios.get('https://www.googleapis.com/oauth2/v3/userinfo',{
+    const response = await axios.get('https://www.googleapis.com/auth/userinfo',{
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -125,25 +125,25 @@ export async function googleLogin(req,res){
       //check if user exists
       const usersList = await user.find({email: email})
       if(usersList.length >0){
-        const user = usersList[0]
+        const User = usersList[0]
         const token = jwt.sign({
-          email : user.email,
-          firstName : user.firstName,
-          lastName : user.lastName,
-          isBlocked : user.isBlocked,
-          type : user.type,
-          profilePicture : user.profilePicture
+          email : User.email,
+          firstName : User.firstName,
+          lastName : User.lastName,
+          isBlocked : User.isBlocked,
+          type : User.type,
+          profilePicture : User.profilePicture
         } , process.env.SECRET)
         
         res.json({
           message: "User logged in",
           token: token,
-          user : {
-            firstName : user.firstName,
-            lastName : user.lastName,
-            type : user.type,
-            profilePicture : user.profilePicture,
-            email : user.email
+          User : {
+            firstName : User.firstName,
+            lastName : User.lastName,
+            type : User.type,
+            profilePicture : User.profilePicture,
+            email : User.email
           }
         })
       }else{
@@ -156,12 +156,13 @@ export async function googleLogin(req,res){
           password: "ffffff",
           profilePicture: response.data.picture
         }
-        const user = new User(newUserData)
-        user.save().then(()=>{
+        const newUser = new user(newUserData)
+        newUser.save().then(()=>{
           res.json({
             message: "User created"
+            
           })
-        }).catch((error)=>{
+        }).catch(()=>{
           res.json({      
             message: "User not created"
           })
