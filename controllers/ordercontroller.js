@@ -72,7 +72,7 @@ export async function getOrders(req, res) {
       return;
     }
     if(isAdmin(req)){
-      const order =await Order.find({email:req.user.email});
+      const order =await Order.find({});
       res.json(orders);
       return;
     }
@@ -172,3 +172,4 @@ export async function updateOrder(req,res){
   });
   }
 }
+
