@@ -71,6 +71,11 @@ export async function getOrders(req, res) {
       res.json(orders);
       return;
     }
+    if(isAdmin(req)){
+      const order =await Order.find({email:req.user.email});
+      res.json(orders);
+      return;
+    }
     const orders = await Order.find({ email: req.user.email });
     res.json(orders);
   } catch (error) {
