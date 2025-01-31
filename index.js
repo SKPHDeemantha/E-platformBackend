@@ -55,6 +55,17 @@ app.use("/api/users",userRouter)
 app.use("/api/products",productRouter)
 app.use("/api/orders",ordertRouter)  
 
+let userCount=0;
+
+app.post("/create-account", (req, res) => {
+  userCount++;
+  res.json({ message: "Account created", totalUsers: userCount });
+});
+
+app.get("/user-count", (req, res) => {
+  res.json({ totalUsers: userCount });
+});
+
 app.listen(
     3000,
     ()=>{

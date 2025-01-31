@@ -1,6 +1,7 @@
+import { mergeConfig } from "axios";
 import Order from "../models/order.js";
 import Product from "../models/product.js";
-import { isCustomer } from "./userController.js";
+import { isAdmin, isCustomer } from "./userController.js";
 
 export async function createOrder(req, res) {
   //methanata oya req eka pass karala na ekai aula
@@ -86,17 +87,20 @@ export async function getquote(req, res) {
 
     let total=0;
     let lableTotal=0;
+   console.log(req.body)
 
     for (let i = 0; i < newOrderData.orderedItems.length; i++) {
       const product = await Product.findOne({
-        productId: newOrderData.orderedItems[i].productId
+        ProductId: newOrderData.orderedItems[i].ProductId
       });
       if (product == null) {
-        return res.json({
-          message: "Product with id " + newOrderData.orderedItems[i].productId + " not found"
+       res.json({
+          message: "Product with id " + newOrderData.orderedItems[i].ProductId + " not found"
         });
+
+        return;
       }
-      lableTotal +=product.price =newOrderData.orderedItems[i].qty;
+      lableTotal +=product.price * newOrderData.orderedItems[i].qty;
       total +=product.lastPrice * newOrderData.orderedItems[i].qty;
       newProductArray[i] = {
         name: product.productName,
@@ -106,24 +110,60 @@ export async function getquote(req, res) {
         image: product.images[0]
       };
     }
-
+    console.log(newProductArray);
     newOrderData.orderedItems = newProductArray;
-    newOrderData.orderedItems =newProductArray;
+    
     newOrderData.total=total;
-    newOrderData.orderId = "QUOTE"; 
-    newOrderData.email = req.user.email;
-
-    const order = new Order(newOrderData);
-    const savedOrder= await order.save();
+   
 
     res.json({
-      message: "Quote created",
-      order : savedOrder
+      orderedItems :newProductArray,
+      total:total,
+      lableTotal:lableTotal,
     });
 
   } catch (error) {
     res.status(500).json({
       message: error.message
     });
+  }
+}
+
+export async function updateOrder(req,res){
+  if(!isAdmin(req)){
+    res.json({
+      message: "Please login as dmin to update orders",
+    });
+  }
+  try{
+    const orderId =req.params.orderId;
+
+    const order =await Order.findOne({
+      orderId: orderId,
+    });
+    if(order ==null){
+      res.status(404).json({
+        message :"Order not found",
+      })
+      return;
+    }
+   const notes =req.body.notes;
+   const status =req.body.status;
+
+   const updateOrder =await Order.findOneAndUpdate(
+    {orderId: orderId},
+   {notes:notes,status:status}
+   );
+   res.json({
+    message: "Order updated",
+    updateOrder: updateOrder
+  });
+
+}catch(error){
+
+  
+  res.status(500).json({
+    message: error.message,
+  });
   }
 }
