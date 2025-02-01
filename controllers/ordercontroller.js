@@ -67,13 +67,13 @@ export async function createOrder(req, res) {
 export async function getOrders(req, res) {
   try {
     if(isCustomer(req)){
-      const order =await Order.find({email:req.user.email});
-      res.json(orders);
+      const order1 =await Order.find({email:req.user.email});   // I changed this variable from order to order1.
+      res.json(order1);
       return;
     }
     if(isAdmin(req)){
-      const order =await Order.find({});
-      res.json(orders);
+      const order2 =await Order.find({});       // I changed this variable from order to order2.
+      res.json(order2);
       return;
     }
     const orders = await Order.find({ email: req.user.email });
