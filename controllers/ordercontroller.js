@@ -96,11 +96,11 @@ export async function getquote(req, res) {
 
     for (let i = 0; i < newOrderData.orderedItems.length; i++) {
       const product = await Product.findOne({
-        ProductId: newOrderData.orderedItems[i].ProductId
+        ProductId: newOrderData.orderedItems[i].productId
       });
       if (product == null) {
        res.json({
-          message: "Product with id " + newOrderData.orderedItems[i].ProductId + " not found"
+          message: "Product with id " + newOrderData.orderedItems[i].productId + " not found"
         });
 
         return;
