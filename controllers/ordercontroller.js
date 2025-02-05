@@ -91,7 +91,7 @@ export async function getquote(req, res) {
     const newProductArray = [];
 
     let total=0;
-    let lableTotal=0;
+    let labeledTotal=0;
    console.log(req.body)
 
     for (let i = 0; i < newOrderData.orderedItems.length; i++) {
@@ -100,31 +100,30 @@ export async function getquote(req, res) {
       });
       if (product == null) {
        res.json({
-          message: "Product with id " + newOrderData.orderedItems[i].productId + " not found"
+          message: "Product with id " + newOrderData.orderedItems[i].productId + " not found",
         });
 
         return;
       }
-      lableTotal +=product.price * newOrderData.orderedItems[i].qty;
+      labeledTotal +=product.price * newOrderData.orderedItems[i].qty;
       total +=product.lastPrice * newOrderData.orderedItems[i].qty;
       newProductArray[i] = {
         name: product.productName,
         price: product.lastPrice,
-        lablePrice :product.price,
+        labeledPrice :product.price,
         quantity: newOrderData.orderedItems[i].qty,
         image: product.images[0]
       };
     }
     console.log(newProductArray);
     newOrderData.orderedItems = newProductArray;
-    
     newOrderData.total=total;
    
 
     res.json({
       orderedItems :newProductArray,
       total:total,
-      lableTotal:lableTotal,
+      labeledTotal:labeledTotal
     });
 
   } catch (error) {
