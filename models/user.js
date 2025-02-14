@@ -27,7 +27,7 @@ const userSchema = mongoose.Schema({
         default : "customer"
     },profilePicture : {
         type : String,
-        default : "C:\Users\hesha\Downloads "
+        default : "https://www.canva.com/icons/MAEGkZHHSyM-user-profile-illustration/"
     }
 })
 
