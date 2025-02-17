@@ -116,7 +116,7 @@ export async function googleLogin(req,res){
    const token=req.body.token; 
 
    try{
-    const response = await axios.get('https://www.googleapis.com/auth/userinfo',{
+    const response = await axios.get('https://www.googleapis.com/oauth2/v3/userinfo',{
         headers: {
           Authorization: `Bearer ${token}`
         }
